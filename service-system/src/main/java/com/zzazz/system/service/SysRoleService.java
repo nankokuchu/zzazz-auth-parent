@@ -1,8 +1,9 @@
 package com.zzazz.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
-import org.springframework.stereotype.Service;
+import com.zzazz.model.vo.SysRoleQueryVo;
 
 /**
  * ClassName: SysRoleService
@@ -14,4 +15,5 @@ import org.springframework.stereotype.Service;
  * @Version: v1.0
  */
 public interface SysRoleService extends IService<SysRole> {
+    R findByPagination(Long page, Long size, SysRoleQueryVo sysRoleQueryVo);
 }

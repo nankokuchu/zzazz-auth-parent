@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzazz.system.mapper.SysRoleMapper">
+    <resultMap id="RoleMap" type="com.zzazz.model.system.SysRole" autoMapping="true"/>
+
+    <sql id="columns">
+        id,role_name,role_code,`description`,create_time,update_time,is_deleted
+    </sql>
+
+    <select id="selectPage" resultMap="RoleMap">
+        SELECT
+        <include refid="columns"/>
+        FROM `zzazz-auth`.sys_role
+        <where>
+            <if test="vo.roleName != null and vo.roleName != ''">
+                AND role_name LIKE CONCAT('%',#{vo.roleName},'%')
+            </if>
+            AND is_deleted = 0
+        </where>
+        order by id desc
+    </select>
+</mapper>

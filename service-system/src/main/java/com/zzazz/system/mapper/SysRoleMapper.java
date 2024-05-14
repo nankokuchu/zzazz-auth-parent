@@ -1,8 +1,15 @@
 package com.zzazz.system.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzazz.model.system.SysRole;
+import com.zzazz.model.vo.SysRoleQueryVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 /**
  * ClassName: SysRoleMapper
@@ -15,4 +22,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysRoleMapper extends BaseMapper<SysRole> {
+    IPage<SysRole> selectPage(IPage<SysRole> page,
+                              @Param("vo") SysRoleQueryVo roleQueryVo);
 }

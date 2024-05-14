@@ -1,15 +1,15 @@
 package com.zzazz.system.controller;
 
+import com.zzazz.common.result.R;
+import com.zzazz.model.system.SysRole;
+import com.zzazz.model.vo.SysRoleQueryVo;
 import com.zzazz.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * ClassName: SysRoleController
@@ -28,10 +28,29 @@ public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
 
+    @ApiOperation("ページネーションで探す")
+    @GetMapping("{page}/{size}")
+    public R findByPagination(@PathVariable Long page,
+                              @PathVariable Long size,
+                              SysRoleQueryVo sysRoleQueryVo) {
+        return sysRoleService.findByPagination(page, size, sysRoleQueryVo);
+    }
+
     @ApiOperation("ユーザーRoleを削除うするAPI")
     @DeleteMapping("remove/{id}")
-    public boolean removeRole(@PathVariable Long id) {
-        boolean b = sysRoleService.removeById(id);
-        return b;
+    public R removeRole(@PathVariable Long id) {
+        boolean isRemove = sysRoleService.removeById(id);
+        if (isRemove) {
+            return R.ok();
+        } else {
+            return R.fail();
+        }
+    }
+
+    @ApiOperation("全てのRoleを返す")
+    @GetMapping("findAll")
+    public R findAll() {
+        List<SysRole> sysRoles = sysRoleService.list();
+        return R.ok(sysRoles);
     }
 }
