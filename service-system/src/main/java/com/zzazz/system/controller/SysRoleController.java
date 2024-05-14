@@ -28,6 +28,43 @@ public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
 
+
+    /**
+     * C
+     * @param sysRole SysRole
+     * @return R
+     */
+    @ApiOperation("Roleを追加するAPI")
+    @PostMapping("save")
+    public R addRole(@RequestBody SysRole sysRole) {
+        boolean isSave = sysRoleService.save(sysRole);
+        if (isSave) {
+            return R.ok();
+        } else {
+            return R.fail();
+        }
+    }
+
+    /**
+     * R
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "idでRoleを取得")
+    @GetMapping("/get/{id}")
+    public R get(@PathVariable Long id) {
+        SysRole role = sysRoleService.getById(id);
+        return R.ok(role);
+    }
+
+
+    /**
+     * R
+     * @param page
+     * @param size
+     * @param sysRoleQueryVo
+     * @return R
+     */
     @ApiOperation("ページネーションで探す")
     @GetMapping("{page}/{size}")
     public R findByPagination(@PathVariable Long page,
@@ -36,6 +73,24 @@ public class SysRoleController {
         return sysRoleService.findByPagination(page, size, sysRoleQueryVo);
     }
 
+
+    /**
+     * U
+     * @param role
+     * @return R
+     */
+    @ApiOperation(value = "Roleをupdate")
+    @PutMapping("/update")
+    public R updateById(@RequestBody SysRole role) {
+        sysRoleService.updateById(role);
+        return R.ok();
+    }
+
+    /**
+     * D
+     * @param id
+     * @return
+     */
     @ApiOperation("ユーザーRoleを削除うするAPI")
     @DeleteMapping("remove/{id}")
     public R removeRole(@PathVariable Long id) {
@@ -47,10 +102,16 @@ public class SysRoleController {
         }
     }
 
-    @ApiOperation("全てのRoleを返す")
-    @GetMapping("findAll")
-    public R findAll() {
-        List<SysRole> sysRoles = sysRoleService.list();
-        return R.ok(sysRoles);
+
+    /**
+     * D
+     * @param idList
+     * @return
+     */
+    @ApiOperation(value = "配列で一括削除")
+    @DeleteMapping("/batchRemove")
+    public R batchRemove(@RequestBody List<Long> idList) {
+        sysRoleService.removeByIds(idList);
+        return R.ok();
     }
 }
