@@ -1,10 +1,9 @@
 package com.zzazz.system.handler;
 
 import com.zzazz.common.result.R;
-import com.zzazz.system.execption.ZzazzException;
+import com.zzazz.system.exception.ZzazzException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
