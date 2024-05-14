@@ -31,6 +31,7 @@ public class SysRoleController {
 
     /**
      * C
+     *
      * @param sysRole SysRole
      * @return R
      */
@@ -47,6 +48,7 @@ public class SysRoleController {
 
     /**
      * R
+     *
      * @param id
      * @return R
      */
@@ -57,9 +59,16 @@ public class SysRoleController {
         return R.ok(role);
     }
 
+    @ApiOperation("全てのRoleを取得")
+    @GetMapping("findAll")
+    public R findAll() {
+        List<SysRole> list = sysRoleService.list();
+        return R.ok(list);
+    }
 
     /**
      * R
+     *
      * @param page
      * @param size
      * @param sysRoleQueryVo
@@ -76,6 +85,7 @@ public class SysRoleController {
 
     /**
      * U
+     *
      * @param role
      * @return R
      */
@@ -88,6 +98,7 @@ public class SysRoleController {
 
     /**
      * D
+     *
      * @param id
      * @return
      */
@@ -105,6 +116,7 @@ public class SysRoleController {
 
     /**
      * D
+     *
      * @param idList
      * @return
      */
