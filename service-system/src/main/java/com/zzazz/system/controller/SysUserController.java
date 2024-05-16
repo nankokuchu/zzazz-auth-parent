@@ -53,7 +53,7 @@ public class SysUserController {
 
     // R->One
     @ApiOperation(value = "IDでユーザーを取得")
-    @GetMapping("getUser/{id}")
+    @GetMapping("get/{id}")
     public R getUserById(@PathVariable Long id) {
         SysUser user = sysUserService.getById(id);
         return R.ok(user);
@@ -61,7 +61,7 @@ public class SysUserController {
 
     // C
     @ApiOperation(value = "ユーザーを保存")
-    @PostMapping("/saveUser")
+    @PostMapping("/save")
     public R save(@RequestBody SysUser user) {
         sysUserService.save(user);
         return R.ok();
@@ -69,7 +69,7 @@ public class SysUserController {
 
     // U
     @ApiOperation(value = "ユーザーを更新")
-    @PutMapping("/updateUser")
+    @PutMapping("/update")
     public R updateById(@RequestBody SysUser user) {
         sysUserService.updateById(user);
         return R.ok();
@@ -78,7 +78,7 @@ public class SysUserController {
     // D
     @ApiOperation(value = "ユーザーIDで削除")
     @DeleteMapping("/remove/{id}")
-    public R remove(@PathVariable Long id) {
+    public R removeUserById(@PathVariable Long id) {
         sysUserService.removeById(id);
         return R.ok();
     }
