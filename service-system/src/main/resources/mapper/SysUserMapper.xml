@@ -12,14 +12,14 @@
     <resultMap id="SysUserMap" type="com.zzazz.model.system.SysUser" autoMapping="true"/>
 
     <select id="selectPage" resultMap="SysUserMap">
-        SELECT *
+        SELECT
+        <include refid="columns"/>
         FROM `zzazz-auth`.sys_user
         <where>
             <if test="vo.keyword != null and vo.keyword != ''">
-                AND (usernmae LIKE CONCAT('%',#{vo.keyword})
-                    OR `name` LIKE CONCAT('%'#{vo.keyword},'%')
-                    OR phone LIKE CONCAT('%'#{vo.keyword},'%')
-                    )
+                AND (username LIKE CONCAT('%',#{vo.keyword},'%')
+                OR `name` LIKE CONCAT('%',#{vo.keyword},'%')
+                OR phone LIKE CONCAT('%',#{vo.keyword},'%'))
             </if>
             AND is_deleted = 0
         </where>
