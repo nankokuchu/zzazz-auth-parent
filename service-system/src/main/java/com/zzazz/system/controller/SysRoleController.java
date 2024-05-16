@@ -122,7 +122,6 @@ public class SysRoleController {
      */
     @ApiOperation(value = "配列で一括削除")
     @DeleteMapping("/batchRemove")
-    // TODO List<Long> idList が　jsonデータを受け取れない!!!
     public R batchRemove(@RequestBody List<Long> idList) {
         sysRoleService.removeByIds(idList);
         return R.ok();
