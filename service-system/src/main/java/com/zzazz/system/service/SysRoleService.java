@@ -3,7 +3,10 @@ package com.zzazz.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
+import com.zzazz.model.vo.AssignRoleVo;
 import com.zzazz.model.vo.SysRoleQueryVo;
+
+import java.util.Map;
 
 /**
  * ClassName: SysRoleService
@@ -16,4 +19,8 @@ import com.zzazz.model.vo.SysRoleQueryVo;
  */
 public interface SysRoleService extends IService<SysRole> {
     R findByPagination(Long page, Long size, SysRoleQueryVo sysRoleQueryVo);
+
+    Map<String, Object> getRolesByUserId(Long userId);
+
+    void doAssign(AssignRoleVo assignRoleVo);
 }

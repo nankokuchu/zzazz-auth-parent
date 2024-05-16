@@ -2,6 +2,8 @@ package com.zzazz.system.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
+import com.zzazz.model.vo.AssginMenuVo;
+import com.zzazz.model.vo.AssignRoleVo;
 import com.zzazz.model.vo.SysRoleQueryVo;
 import com.zzazz.system.service.SysRoleService;
 import io.swagger.annotations.Api;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: SysRoleController
@@ -126,4 +129,25 @@ public class SysRoleController {
         sysRoleService.removeByIds(idList);
         return R.ok();
     }
+
+    /**
+     * ユーザーIDで、該当するユーザーの全てのロールを取得
+     *
+     * @param userId ユーザーID
+     * @return R
+     */
+    @ApiOperation(value = "ユーザーIDで、該当するユーザーの全てのロールを取得")
+    @GetMapping("/toAssign/{userId}")
+    public R toAssign(@PathVariable Long userId) {
+        Map<String, Object> roleMap = sysRoleService.getRolesByUserId(userId);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "ユーザにロールを割り当てる")
+    @PostMapping("/doAssign")
+    public R doAssign(@RequestBody AssignRoleVo assignRoleVo) {
+        sysRoleService.doAssign(assignRoleVo);
+        return R.ok();
+    }
+
 }
