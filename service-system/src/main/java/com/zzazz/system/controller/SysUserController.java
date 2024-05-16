@@ -1,8 +1,14 @@
 package com.zzazz.system.controller;
 
+import com.zzazz.common.result.R;
+import com.zzazz.model.system.SysUser;
+import com.zzazz.model.vo.SysUserQueryVo;
+import com.zzazz.system.service.SysUserService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ClassName: SysUserController
@@ -13,8 +19,67 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description: SysUserController
  * @Version: v1.0
  */
-@Api(tags = "ユーザーRoleを管理するAPI")
+@Api(tags = "ユーザーを管理するAPI")
 @RestController
 @RequestMapping("/admin/system/sysUser")
 public class SysUserController {
+
+    @Autowired
+    private SysUserService sysUserService;
+
+    // R->pagination
+
+    /**
+     * ページネーションで探す
+     *
+     * @param page           currentPage
+     * @param size           表示するデータ数
+     * @param sysUserQueryVo bean
+     * @return R
+     */
+    @ApiOperation("ページネーションで探す")
+    @GetMapping("{page}/{size}")
+    public R getUserByPagination(
+            @ApiParam(name = "page", value = "currentPage", required = true)
+            @PathVariable Long page,
+
+            @ApiParam(name = "size", value = "表示するデータ数", required = true)
+            @PathVariable Long size,
+
+            @ApiParam(name = "userQueryVo", value = "検索条件")
+                    SysUserQueryVo sysUserQueryVo) {
+        return sysUserService.getUserByPagination(page, size, sysUserQueryVo);
+    }
+
+    // R->One
+    @ApiOperation(value = "IDでユーザーを取得")
+    @GetMapping("getUser/{id}")
+    public R getUserById(@PathVariable Long id) {
+        SysUser user = sysUserService.getById(id);
+        return R.ok(user);
+    }
+
+    // C
+    @ApiOperation(value = "ユーザーを保存")
+    @PostMapping("/saveUser")
+    public R save(@RequestBody SysUser user) {
+        sysUserService.save(user);
+        return R.ok();
+    }
+
+    // U
+    @ApiOperation(value = "ユーザーを更新")
+    @PutMapping("/updateUser")
+    public R updateById(@RequestBody SysUser user) {
+        sysUserService.updateById(user);
+        return R.ok();
+    }
+
+    // D
+    @ApiOperation(value = "ユーザーIDで削除")
+    @DeleteMapping("/remove/{id}")
+    public R remove(@PathVariable Long id) {
+        sysUserService.removeById(id);
+        return R.ok();
+    }
 }
