@@ -16,7 +16,7 @@ import java.util.Map;
 public class BaseEntity implements Serializable {
 
     @TableId(type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     @TableField("create_time")
     private Date createTime;
@@ -34,7 +34,7 @@ public class BaseEntity implements Serializable {
     public BaseEntity() {
     }
 
-    public BaseEntity(String id, Date createTime, Date updateTime, Integer isDeleted, Map<String, Object> param) {
+    public BaseEntity(Long id, Date createTime, Date updateTime, Integer isDeleted, Map<String, Object> param) {
         this.id = id;
         this.createTime = createTime;
         this.updateTime = updateTime;
