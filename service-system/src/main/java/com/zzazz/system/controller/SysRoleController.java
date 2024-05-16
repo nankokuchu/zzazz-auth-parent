@@ -140,7 +140,7 @@ public class SysRoleController {
     @GetMapping("/toAssign/{userId}")
     public R toAssign(@PathVariable Long userId) {
         Map<String, Object> roleMap = sysRoleService.getRolesByUserId(userId);
-        return R.ok();
+        return R.ok(roleMap);
     }
 
     @ApiOperation(value = "ユーザにロールを割り当てる")
