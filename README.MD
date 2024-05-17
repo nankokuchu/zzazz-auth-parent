@@ -7,5 +7,6 @@
 > Node.js + Npm + Vue + ElementUI + Axios
 # ユーザー管理CRUD-API完成(フロントと連結完成)
 # ユーザーとロールのCRUD-API完成(フロントと連結完成)
+# ロールとメニューのCRUD-API完成(フロントと連結完成)
 # ログインapiとユーザー情報取得apiを構築
 
