@@ -30,10 +30,12 @@ public class MenuHelper {
         sysMenu.setChildren(new ArrayList<SysMenu>());
 
         for (SysMenu it : treeNodes) {
+            // ENDポイント
             if(sysMenu.getId().longValue() == it.getParentId().longValue()) {
                 if (sysMenu.getChildren() == null) {
                     sysMenu.setChildren(new ArrayList<>());
                 }
+                // 再帰
                 sysMenu.getChildren().add(findChildren(it,treeNodes));
             }
         }
