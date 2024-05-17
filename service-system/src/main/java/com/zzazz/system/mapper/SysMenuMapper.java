@@ -2,6 +2,7 @@ package com.zzazz.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zzazz.model.system.SysMenu;
+import org.springframework.stereotype.Repository;
 
 /**
  * ClassName: SysMenuMapper
@@ -12,5 +13,6 @@ import com.zzazz.model.system.SysMenu;
  * @Description: SysMenuMapper
  * @Version: v1.0
  */
+@Repository
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 }

@@ -2,7 +2,9 @@ package com.zzazz.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.system.SysMenu;
-import com.zzazz.model.system.SysRole;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * ClassName: SysMenuService
@@ -14,4 +16,7 @@ import com.zzazz.model.system.SysRole;
  * @Version: v1.0
  */
 public interface SysMenuService extends IService<SysMenu> {
+    List<SysMenu> getMenuByNodes();
+
+    boolean removeById(Serializable id);
 }
