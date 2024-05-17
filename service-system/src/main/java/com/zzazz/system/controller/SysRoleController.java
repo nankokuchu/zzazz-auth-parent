@@ -2,7 +2,6 @@ package com.zzazz.system.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
-import com.zzazz.model.vo.AssginMenuVo;
 import com.zzazz.model.vo.AssignRoleVo;
 import com.zzazz.model.vo.SysRoleQueryVo;
 import com.zzazz.system.service.SysRoleService;
