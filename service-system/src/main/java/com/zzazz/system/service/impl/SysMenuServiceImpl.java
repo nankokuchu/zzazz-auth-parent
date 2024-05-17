@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzazz.common.result.ResultCodeEnum;
 import com.zzazz.model.system.SysMenu;
+import com.zzazz.model.system.SysRoleMenu;
+import com.zzazz.model.vo.AssignMenuVo;
 import com.zzazz.system.exception.ZzazzException;
 import com.zzazz.system.mapper.SysMenuMapper;
+import com.zzazz.system.mapper.SysRoleMenuMapper;
 import com.zzazz.system.service.SysMenuService;
 import com.zzazz.system.util.MenuHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +33,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Autowired
     private SysMenuMapper sysMenuMapper;
+
+    @Autowired
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     public List<SysMenu> getMenuByNodes() {
@@ -51,5 +58,49 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
         int row = sysMenuMapper.deleteById(id);
         return row > 0;
+    }
+
+    @Override
+    public List<SysMenu> findSysMenuByRoleId(Long roleId) {
+        // 1,すべてのstatusが1の権限リストを取得
+        LambdaQueryWrapper<SysMenu> sysMenuWrapper = new LambdaQueryWrapper<>();
+        sysMenuWrapper.eq(SysMenu::getStatus, 1);
+        List<SysMenu> sysMenus = sysMenuMapper.selectList(sysMenuWrapper);
+
+        // 2,ロールIDに基づいてロールの権限を取得
+        LambdaQueryWrapper<SysRoleMenu> sysRoleMenuWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuWrapper.eq(SysRoleMenu::getRoleId, roleId);
+        List<SysRoleMenu> sysRoleMenus = sysRoleMenuMapper.selectList(sysRoleMenuWrapper);
+
+        // 3,そのロールに割り当てられたすべての権限IDを取得
+        List<Long> roleMenus = new ArrayList<>();
+        for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
+            roleMenus.add(sysRoleMenu.getMenuId());
+        }
+
+        for (SysMenu sysMenu : sysMenus) {
+            sysMenu.setSelect(roleMenus.contains(sysMenu.getId()));
+        }
+        // 4,権限リストを権限ツリーに変換
+        return MenuHelper.buildTree(sysMenus);
+    }
+
+    @Override
+    public void doAssign(AssignMenuVo assignMenuVo) {
+        // 既に存在する関係を削除
+        LambdaQueryWrapper<SysRoleMenu> sysRoleMenuWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuWrapper.eq(SysRoleMenu::getRoleId, assignMenuVo.getRoleId());
+        sysRoleMenuMapper.delete(sysRoleMenuWrapper);
+
+        // 新しい関係を保存する
+        List<Long> menuIdList = assignMenuVo.getMenuIdList();
+        for (Long menuId : menuIdList) {
+            if(menuId != null){
+                SysRoleMenu sysRoleMenu = new SysRoleMenu();
+                sysRoleMenu.setMenuId(menuId);
+                sysRoleMenu.setRoleId(assignMenuVo.getRoleId());
+                sysRoleMenuMapper.insert(sysRoleMenu);
+            }
+        }
     }
 }

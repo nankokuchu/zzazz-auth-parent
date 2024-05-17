@@ -34,4 +34,9 @@ public class SysMenuServiceTest {
     void removeById(){
         boolean b = sysMenuService.removeById(3L);
     }
+
+    @Test
+    void findSysMenuByRoleId(){
+        List<SysMenu> sysMenus = sysMenuService.findSysMenuByRoleId(3L);
+    }
 }

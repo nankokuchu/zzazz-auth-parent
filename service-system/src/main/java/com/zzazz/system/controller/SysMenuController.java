@@ -2,6 +2,7 @@ package com.zzazz.system.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysMenu;
+import com.zzazz.model.vo.AssignMenuVo;
 import com.zzazz.system.service.SysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class SysMenuController {
     // R->List
     @ApiOperation(value = "全てのメニューをTREEの形式で取得")
     @GetMapping("/getMenu")
-    public R getMenu() {
+    public R<List<SysMenu>> getMenu() {
         List<SysMenu> list = sysMenuService.getMenuByNodes();
         return R.ok(list);
     }
@@ -66,5 +67,20 @@ public class SysMenuController {
             return R.ok();
         }
         return R.fail();
+    }
+
+    // ロールからメニューを取得
+    @ApiOperation(value = "ロールからメニューを取得")
+    @GetMapping("toAssign/{roleId}")
+    public R<List<SysMenu>> toAssign(@PathVariable Long roleId) {
+        List<SysMenu> list = sysMenuService.findSysMenuByRoleId(roleId);
+        return R.ok(list);
+    }
+
+    @ApiOperation(value = "メニューにロールを付与する")
+    @PostMapping("/doAssign")
+    public R<Void> doAssign(@RequestBody AssignMenuVo assignMenuVo) {
+        sysMenuService.doAssign(assignMenuVo);
+        return R.ok();
     }
 }

@@ -2,6 +2,7 @@ package com.zzazz.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.system.SysMenu;
+import com.zzazz.model.vo.AssignMenuVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,4 +20,8 @@ public interface SysMenuService extends IService<SysMenu> {
     List<SysMenu> getMenuByNodes();
 
     boolean removeById(Serializable id);
+
+    List<SysMenu> findSysMenuByRoleId(Long roleId);
+
+    void doAssign(AssignMenuVo assignMenuVo);
 }
