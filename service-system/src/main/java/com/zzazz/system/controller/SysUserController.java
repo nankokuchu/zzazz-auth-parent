@@ -1,6 +1,7 @@
 package com.zzazz.system.controller;
 
 import com.zzazz.common.result.R;
+import com.zzazz.common.util.MD5;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.model.vo.SysUserQueryVo;
 import com.zzazz.system.service.SysUserService;
@@ -62,9 +63,15 @@ public class SysUserController {
     // C
     @ApiOperation(value = "ユーザーを保存")
     @PostMapping("/save")
-    public R save(@RequestBody SysUser user) {
-        sysUserService.save(user);
-        return R.ok();
+    public R<Void> save(@RequestBody SysUser user) {
+        String encrypt = MD5.encrypt(user.getPassword());
+        user.setPassword(encrypt);
+        boolean isSuccess = sysUserService.save(user);
+        if (isSuccess) {
+            return R.ok();
+        } else {
+            return R.fail();
+        }
     }
 
     // U
