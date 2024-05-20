@@ -36,6 +36,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R error(ZzazzException e){
         e.printStackTrace();
-        return R.fail().message("カスタマイズ異常が発生しました");
+        return R.fail().message(e.getMessage());
     }
 }
