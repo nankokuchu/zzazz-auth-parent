@@ -5,4 +5,23 @@
 
 <mapper namespace="com.zzazz.system.mapper.SysMenuMapper">
 
+    <resultMap id="sysMenuMap" type="com.zzazz.model.system.SysMenu" autoMapping="true">
+    </resultMap>
+
+    <sql id="columns">
+        m.id,m.parent_id,m.name,m.type,m.path,m.component,m.perms,m.icon,m.sort_value,m.status,m.create_time,m.update_time,m.is_deleted
+    </sql>
+
+    <select id="findListByUserId" resultMap="sysMenuMap">
+        SELECT DISTINCT
+        <include refid="columns"/>
+        FROM `zzazz-auth`.sys_menu m
+        INNER JOIN `zzazz-auth`.sys_role_menu rm ON rm.menu_id = m.id
+        INNER JOIN `zzazz-auth`.sys_user_role ur ON ur.role_id = rm.role_id
+        WHERE ur.user_id = #{userId}
+        AND m.status = 1
+        AND rm.is_deleted = 0
+        AND ur.is_deleted = 0
+        AND m.is_deleted = 0
+    </select>
 </mapper>
