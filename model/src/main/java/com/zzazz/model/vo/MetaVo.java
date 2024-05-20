@@ -1,5 +1,11 @@
 package com.zzazz.model.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 /**
  * ClassName: MetaVo
  * Package: com.zzazz.model.vo
@@ -9,7 +15,12 @@ package com.zzazz.model.vo;
  * @Description: MetaVo
  * @Version: v1.0
  */
-public class MetaVo {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MetaVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     // サイドメーニューの名前
     private String title;
@@ -17,11 +28,11 @@ public class MetaVo {
     // アイコンのpath src/assets/icons/svg
     private String icon;
 
-    public MetaVo() {
-    }
-
-    public MetaVo(String title, String icon) {
-        this.title = title;
-        this.icon = icon;
-    }
+    // public MetaVo() {
+    // }
+    //
+    // public MetaVo(String title, String icon) {
+    //     this.title = title;
+    //     this.icon = icon;
+    // }
 }

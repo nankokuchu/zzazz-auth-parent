@@ -95,7 +95,7 @@ public class IndexController {
         String username = JwtHelper.getUsername(token);
 
         Map<String, Object> data = sysUserService.getUserAllInfoByUsername(username);
-
+        // Map<String, Object> data = new HashMap<>();
         // data.put("roles", "[admin]");
         // data.put("introduction", "I am a super administrator");
         // data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
