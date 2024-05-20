@@ -1,16 +1,19 @@
 package com.zzazz.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzazz.common.result.ResultCodeEnum;
 import com.zzazz.model.system.SysMenu;
 import com.zzazz.model.system.SysRoleMenu;
 import com.zzazz.model.vo.AssignMenuVo;
+import com.zzazz.model.vo.RouterVo;
 import com.zzazz.system.exception.ZzazzException;
 import com.zzazz.system.mapper.SysMenuMapper;
 import com.zzazz.system.mapper.SysRoleMenuMapper;
 import com.zzazz.system.service.SysMenuService;
 import com.zzazz.system.util.MenuHelper;
+import com.zzazz.system.util.RouterHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -95,12 +98,52 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 新しい関係を保存する
         List<Long> menuIdList = assignMenuVo.getMenuIdList();
         for (Long menuId : menuIdList) {
-            if(menuId != null){
+            if (menuId != null) {
                 SysRoleMenu sysRoleMenu = new SysRoleMenu();
                 sysRoleMenu.setMenuId(menuId);
                 sysRoleMenu.setRoleId(assignMenuVo.getRoleId());
                 sysRoleMenuMapper.insert(sysRoleMenu);
             }
         }
+    }
+
+    // メニューの権限データ
+    @Override
+    public List<RouterVo> getUserMenuList(Long userId) {
+        List<SysMenu> sysMenuList = null;
+        // adminの場合全て権限を持つ
+        if (1 == userId) {
+            LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(SysMenu::getStatus, 1).orderByAsc(SysMenu::getSortValue);
+            sysMenuList = sysMenuMapper.selectList(wrapper);
+        } else {
+            sysMenuList = sysMenuMapper.findListByUserId(userId);
+        }
+
+        // Tree形式に変更
+        List<SysMenu> sysMenuTreeList = MenuHelper.buildTree(sysMenuList);
+
+        return RouterHelper.buildRouters(sysMenuTreeList);
+    }
+
+    // ボタンの権限データ
+    @Override
+    public List<String> getUserButtonList(Long userId) {
+        List<SysMenu> sysMenuList = null;
+        if (userId == 1) {
+            LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(SysMenu::getStatus, 1);
+            sysMenuList = sysMenuMapper.selectList(wrapper);
+        } else {
+            sysMenuList = sysMenuMapper.findListByUserId(userId);
+        }
+
+        List<String> permissionList = new ArrayList<>();
+        for (SysMenu sysMenu : sysMenuList) {
+            if(sysMenu.getType() == 2){
+                permissionList.add(sysMenu.getPerms());
+            }
+        }
+        return permissionList;
     }
 }
