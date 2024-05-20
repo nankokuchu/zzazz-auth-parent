@@ -5,6 +5,8 @@ import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.model.vo.SysUserQueryVo;
 
+import java.util.Map;
+
 /**
  * ClassName: SysUserService
  * Package: com.zzazz.system.service
@@ -16,4 +18,8 @@ import com.zzazz.model.vo.SysUserQueryVo;
  */
 public interface SysUserService extends IService<SysUser> {
     R getUserByPagination(Long page, Long size, SysUserQueryVo sysUserQueryVo);
+
+    SysUser getUserInfoByUsername(String username);
+
+    Map<String, Object> getUserAllInfoByUsername(String username);
 }
