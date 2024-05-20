@@ -92,7 +92,6 @@ public class IndexController {
         String token = request.getHeader("token");
 
         // tokenからidとusernameを取得
-        Long userId = JwtHelper.getUserId(token);
         String username = JwtHelper.getUsername(token);
 
         Map<String, Object> data = sysUserService.getUserAllInfoByUsername(username);
