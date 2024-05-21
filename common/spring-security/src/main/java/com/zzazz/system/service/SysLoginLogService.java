@@ -1,5 +1,9 @@
 package com.zzazz.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zzazz.model.system.SysLoginLog;
+import com.zzazz.model.vo.SysLoginLogQueryVo;
+
 /**
  * ClassName: SysLoginLogService
  * Package: com.zzazz.system.service
@@ -11,4 +15,8 @@ package com.zzazz.system.service;
  */
 public interface SysLoginLogService {
     void recordLoginLog(String username, Integer status, String ipaddr, String message);
+
+
+    IPage<SysLoginLog> selectPage(Long page, Long size, SysLoginLogQueryVo sysLoginLogQueryVo);
+
 }

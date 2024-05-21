@@ -1,12 +1,15 @@
 package com.zzazz.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzazz.model.system.SysLoginLog;
+import com.zzazz.model.vo.SysLoginLogQueryVo;
 import com.zzazz.system.mapper.SysLoginLogMapper;
 import com.zzazz.system.service.SysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
+import org.springframework.util.StringUtils;
 
 /**
  * ClassName: SysLoginLogServiceImpl
@@ -32,5 +35,28 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
         // ログの状態
         sysLoginLog.setStatus(status);
         sysLoginLogMapper.insert(sysLoginLog);
+    }
+
+    @Override
+    public IPage<SysLoginLog> selectPage(Long page, Long size, SysLoginLogQueryVo sysLoginLogQueryVo) {
+        Page<SysLoginLog> pageParam = new Page<>(page, size);
+        LambdaQueryWrapper<SysLoginLog> wrapper = new LambdaQueryWrapper<>();
+        String username = sysLoginLogQueryVo.getUsername();
+        String createTimeBegin = sysLoginLogQueryVo.getCreateTimeBegin();
+        String createTimeEnd = sysLoginLogQueryVo.getCreateTimeEnd();
+
+        if (!StringUtils.isEmpty(username)){
+            wrapper.eq(SysLoginLog::getUsername, username);
+        }
+
+        if (!StringUtils.isEmpty(createTimeBegin)){
+            wrapper.ge(SysLoginLog::getCreateTime, createTimeBegin);
+        }
+
+        if (!StringUtils.isEmpty(createTimeEnd)){
+            wrapper.le(SysLoginLog::getCreateTime, createTimeEnd);
+        }
+
+        return sysLoginLogMapper.selectPage(pageParam, wrapper);
     }
 }
