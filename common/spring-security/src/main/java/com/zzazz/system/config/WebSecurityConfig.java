@@ -3,6 +3,7 @@ package com.zzazz.system.config;
 import com.zzazz.system.custom.CustomMd5PasswordEncoder;
 import com.zzazz.system.fillter.TokenAuthenticationFilter;
 import com.zzazz.system.fillter.TokenLoginFilter;
+import com.zzazz.system.service.SysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomMd5PasswordEncoder customMd5PasswordEncoder;
 
+    @Autowired
+    private SysLoginLogService sysLoginLogService;
+
 
     @Bean
     @Override
@@ -57,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //TokenAuthenticationFilter放到UsernamePasswordAuthenticationFilter的前面，这样做就是为了除了登录的时候去查询数据库外，其他时候都用token进行认证。
                 .addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new TokenLoginFilter(authenticationManager()));
+                .addFilter(new TokenLoginFilter(authenticationManager(),sysLoginLogService));
 
         //禁用session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -66,8 +70,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 指定UserDetailService和加密器
-        System.out.println("userDetailsService = " + userDetailsService);
-        System.out.println("customMd5PasswordEncoder = " + customMd5PasswordEncoder);
         auth.userDetailsService(userDetailsService).passwordEncoder(customMd5PasswordEncoder);
     }
 
