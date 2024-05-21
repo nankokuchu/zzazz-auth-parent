@@ -10,3 +10,9 @@
 # ユーザーとロールのCRUD-API完成(フロントと連結完成)
 # ロールとメニューのCRUD-API完成(フロントと連結完成)
 # ユーザーことに関連するメニュー表示できるよう実装完了(フロントと連結完成)
+# Spring Securityについて
+> Spring Securityの流れ
+>> Spring Securityとredis->NG
+# ログ機能API実装済み
+> ログインログ機能API
+>> 操作ログ機能API
