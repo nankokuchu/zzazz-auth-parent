@@ -1,4 +1,4 @@
-package com.zzazz.system.util;
+package com.zzazz.common.util;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.ServerHttpRequest;
