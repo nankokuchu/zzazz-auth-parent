@@ -7,6 +7,8 @@ import com.zzazz.common.util.JwtHelper;
 import com.zzazz.common.util.ResponseUtil;
 import com.zzazz.system.custom.CustomUser;
 import com.zzazz.model.vo.LoginVo;
+import com.zzazz.system.service.SysLoginLogService;
+import com.zzazz.system.util.IpUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,9 +35,13 @@ import java.util.Map;
  */
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    public TokenLoginFilter(AuthenticationManager authenticationManager) {
+    private final SysLoginLogService sysLoginLogService;
+
+    public TokenLoginFilter(AuthenticationManager authenticationManager,
+                            SysLoginLogService sysLoginLogService) {
         this.setAuthenticationManager(authenticationManager);
         this.setPostOnly(false);
+        this.sysLoginLogService = sysLoginLogService;
         //ログインpathを指定する。
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/system/index/login", "POST"));
     }
@@ -80,6 +86,9 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication auth) throws IOException, ServletException {
         CustomUser customUser = (CustomUser) auth.getPrincipal();
         String token = JwtHelper.createToken(customUser.getSysUser().getId(), customUser.getSysUser().getUsername());
+
+        // 成功した時登録ログを追加
+        sysLoginLogService.recordLoginLog(customUser.getUsername(), 1, IpUtil.getIpAddress(request), "登录成功");
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
