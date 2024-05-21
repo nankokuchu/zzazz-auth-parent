@@ -4,6 +4,8 @@ import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
 import com.zzazz.model.vo.AssignRoleVo;
 import com.zzazz.model.vo.SysRoleQueryVo;
+import com.zzazz.system.annotation.Log;
+import com.zzazz.system.enums.BusinessType;
 import com.zzazz.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +39,7 @@ public class SysRoleController {
      * @param sysRole SysRole
      * @return R
      */
+    @Log(title = "ロール管理", businessType = BusinessType.INSERT)
     @ApiOperation("Roleを追加するAPI")
     @PostMapping("save")
     public R addRole(@RequestBody SysRole sysRole) {
