@@ -1,7 +1,7 @@
 package com.zzazz.system.service.impl;
 
 import com.zzazz.common.result.ResultCodeEnum;
-import com.zzazz.custom.CustomUser;
+import com.zzazz.system.custom.CustomUser;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.system.exception.ZzazzException;
 import com.zzazz.system.service.SysUserService;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
@@ -23,6 +24,7 @@ import java.util.Collections;
  * @Description: UserDetailsServiceImpl
  * @Version: v1.0
  */
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final Log logger = LogFactory.getLog(this.getClass());
     @Autowired

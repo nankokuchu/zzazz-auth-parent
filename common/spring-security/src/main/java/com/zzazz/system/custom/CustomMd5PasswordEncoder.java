@@ -1,8 +1,10 @@
-package com.zzazz.custom;
+package com.zzazz.system.custom;
 
 import com.zzazz.common.util.MD5;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * ClassName: CustomMd5PasswordEncoder

@@ -1,8 +1,9 @@
-package com.zzazz.custom;
+package com.zzazz.system.custom;
 
 import com.zzazz.model.system.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
