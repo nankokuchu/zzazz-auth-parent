@@ -33,7 +33,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        logger.info("uri:"+request.getRequestURI());
+        // logger.info("uri:"+request.getRequestURI());
         //ログインurlはpassする
         if("/admin/system/index/login".equals(request.getRequestURI())) {
             chain.doFilter(request, response);
@@ -52,10 +52,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         // headからtokenを取得
         String token = request.getHeader("token");
-        logger.info("token:"+token);
+        // logger.info("token:"+token);
         if (!StringUtils.isEmpty(token)) {
             String username = JwtHelper.getUsername(token);
-            logger.info("username:"+username);
+            // logger.info("username:"+username);
             if (!StringUtils.isEmpty(username)) {
                 return new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
             }
