@@ -4,16 +4,19 @@ import com.zzazz.common.result.ResultCodeEnum;
 import com.zzazz.system.custom.CustomUser;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.system.exception.ZzazzException;
+import com.zzazz.system.service.SysMenuService;
 import com.zzazz.system.service.SysUserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ClassName: UserDetailsServiceImpl
@@ -30,6 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private SysUserService sysUserService;
 
+    @Autowired
+    private SysMenuService sysMenuService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // usernameでユーザーを取得
@@ -43,9 +49,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new ZzazzException(ResultCodeEnum.ACCOUNT_STOP);
         }
 
-        // TODO 要確認
-        logger.info(sysUser.toString());
+        // userIdからボタンの権限を取得する
+        List<String> userButtonList = sysMenuService.getUserButtonList(sysUser.getId());
+
+        // List<SimpleGrantedAuthority> authorities = new ArrayList<>(); SpringSecurityの形式
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (String s : userButtonList) {
+            authorities.add(new SimpleGrantedAuthority(s.trim()));
+        }
+
         // カスタマイズした　CustomUser　extends User extends UserDetails であるため、CustomUserを返す。
-        return new CustomUser(sysUser, Collections.emptyList());
+        return new CustomUser(sysUser, authorities);
     }
 }
