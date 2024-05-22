@@ -22,7 +22,7 @@ public enum ResultCodeEnum {
     ARGUMENT_VALID_ERROR(210, "Parameterバリデーション異常"),
 
     LOGIN_AUTH(208, "未登録"),
-    PERMISSION(209, "権限なし"),
+    PERMISSION(209, "権限がないアクションです!!!"),
     ACCOUNT_ERROR(214, "IDが間違っている"),
     PASSWORD_ERROR(215, "パスワードが間違っている"),
     LOGIN_MOBLE_ERROR( 216, "IDが間違っている"),
