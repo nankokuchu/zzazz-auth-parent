@@ -19,3 +19,18 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+9
+  activiti:
+    # false: デフォルト、データベーステーブルは変更されないが、バージョンが違うかテーブルが欠けている場合は例外がスローされる（本番環境使用）
+    # true: テーブルが存在しない場合、自動的に作成（開発環境使用）
+    # create_drop: 起動時に作成し、終了時にテーブルを削除（テスト環境使用）
+    # drop_create: 起動時にテーブルを削除し、その後テーブルを作成（手動でエンジンを停止する必要はない）
+    database-schema-update: true
+    # 履歴テーブルが存在するかどうか確認、activities7ではデフォルトで履歴テーブルは無効
+    db-history-used: true
+    # none：履歴データを保存しない。プロセス中で最も効率的
+    # activity：プロセスインスタンスとプロセスアクティビティのみ保存
+    # audit：activityに加え、すべてのプロセスタスクおよびその属性を保存。auditはhistoryのデフォルト値
+    # full：auditに加え、その他すべてのプロセス関連の詳細データを保存。一部のプロセスパラメータも含む
+    history-level: full
+    # プロセスファイルを検証。デフォルトではresourcesフォルダ内のprocessフォルダのプロセスファイルを検証
+    check-process-definitions: true
