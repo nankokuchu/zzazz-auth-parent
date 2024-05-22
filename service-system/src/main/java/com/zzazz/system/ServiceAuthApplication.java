@@ -3,6 +3,7 @@ package com.zzazz.system;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * ClassName: ServiceAuthApplication
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version: v1.0
  */
 @SpringBootApplication
+@ComponentScan("com.zzazz")
 @MapperScan("com.zzazz.system.mapper")
 public class ServiceAuthApplication {
     public static void main(String[] args) {
