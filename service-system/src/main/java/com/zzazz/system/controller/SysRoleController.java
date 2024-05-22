@@ -10,6 +10,7 @@ import com.zzazz.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class SysRoleController {
      * @param sysRole SysRole
      * @return R
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.add')")
     @Log(title = "ロール管理", businessType = BusinessType.INSERT)
     @ApiOperation("Roleを追加するAPI")
     @PostMapping("save")
@@ -57,6 +59,8 @@ public class SysRoleController {
      * @param id
      * @return R
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
+    @Log(title = "ロール管理", businessType = BusinessType.OTHER)
     @ApiOperation(value = "idでRoleを取得")
     @GetMapping("/get/{id}")
     public R get(@PathVariable Long id) {
@@ -66,6 +70,7 @@ public class SysRoleController {
 
     @ApiOperation("全てのRoleを取得")
     @GetMapping("findAll")
+    @Log(title = "ロール管理", businessType = BusinessType.OTHER)
     public R findAll() {
         List<SysRole> list = sysRoleService.list();
         return R.ok(list);
@@ -79,6 +84,8 @@ public class SysRoleController {
      * @param sysRoleQueryVo
      * @return R
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
+    @Log(title = "ロール管理", businessType = BusinessType.OTHER)
     @ApiOperation("ページネーションで探す")
     @GetMapping("{page}/{size}")
     public R findByPagination(@PathVariable Long page,
@@ -94,6 +101,8 @@ public class SysRoleController {
      * @param role
      * @return R
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.update')")
+    @Log(title = "ロール管理", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "Roleをupdate")
     @PutMapping("/update")
     public R updateById(@RequestBody SysRole role) {
@@ -107,6 +116,8 @@ public class SysRoleController {
      * @param id
      * @return
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
+    @Log(title = "ロール管理", businessType = BusinessType.DELETE)
     @ApiOperation("ユーザーRoleを削除うするAPI")
     @DeleteMapping("remove/{id}")
     public R removeRole(@PathVariable Long id) {
@@ -125,6 +136,8 @@ public class SysRoleController {
      * @param idList
      * @return
      */
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
+    @Log(title = "ロール管理", businessType = BusinessType.DELETE)
     @ApiOperation(value = "配列で一括削除")
     @DeleteMapping("/batchRemove")
     public R batchRemove(@RequestBody List<Long> idList) {
