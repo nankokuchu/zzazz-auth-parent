@@ -1,5 +1,6 @@
 package com.zzazz.system.process.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.process.ProcessType;
 
@@ -13,4 +14,5 @@ import com.zzazz.model.process.ProcessType;
  * @Version: v1.0
  */
 public interface ProcessTypeService extends IService<ProcessType> {
+    IPage<ProcessType> getPage(Long page, Long size);
 }
