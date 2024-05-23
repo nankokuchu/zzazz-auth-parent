@@ -3,7 +3,7 @@ package com.zzazz.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysLoginLog;
-import com.zzazz.model.vo.SysLoginLogQueryVo;
+import com.zzazz.model.vo.system.SysLoginLogQueryVo;
 import com.zzazz.system.service.SysLoginLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

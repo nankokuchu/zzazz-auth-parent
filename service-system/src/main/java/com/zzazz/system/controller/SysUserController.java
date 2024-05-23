@@ -3,7 +3,7 @@ package com.zzazz.system.controller;
 import com.zzazz.common.result.R;
 import com.zzazz.common.util.MD5;
 import com.zzazz.model.system.SysUser;
-import com.zzazz.model.vo.SysUserQueryVo;
+import com.zzazz.model.vo.system.SysUserQueryVo;
 import com.zzazz.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

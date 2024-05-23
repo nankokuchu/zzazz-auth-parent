@@ -2,7 +2,7 @@ package com.zzazz.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.model.system.SysOperLog;
-import com.zzazz.model.vo.SysOperLogQueryVo;
+import com.zzazz.model.vo.system.SysOperLogQueryVo;
 
 /**
  * ClassName: OperLogService

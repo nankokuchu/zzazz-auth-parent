@@ -1,4 +1,4 @@
-package com.zzazz.model.vo;
+package com.zzazz.model.vo.system;
 
 import lombok.Data;
 

@@ -3,8 +3,8 @@ package com.zzazz.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
-import com.zzazz.model.vo.AssignRoleVo;
-import com.zzazz.model.vo.SysRoleQueryVo;
+import com.zzazz.model.vo.system.AssignRoleVo;
+import com.zzazz.model.vo.system.SysRoleQueryVo;
 
 import java.util.Map;
 

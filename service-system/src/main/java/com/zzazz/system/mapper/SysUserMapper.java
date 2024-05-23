@@ -3,7 +3,7 @@ package com.zzazz.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.model.system.SysUser;
-import com.zzazz.model.vo.SysUserQueryVo;
+import com.zzazz.model.vo.system.SysUserQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

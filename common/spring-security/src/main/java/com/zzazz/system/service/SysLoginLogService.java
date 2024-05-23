@@ -2,7 +2,7 @@ package com.zzazz.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.model.system.SysLoginLog;
-import com.zzazz.model.vo.SysLoginLogQueryVo;
+import com.zzazz.model.vo.system.SysLoginLogQueryVo;
 
 /**
  * ClassName: SysLoginLogService

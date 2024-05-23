@@ -2,8 +2,8 @@ package com.zzazz.system.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
-import com.zzazz.model.vo.AssignRoleVo;
-import com.zzazz.model.vo.SysRoleQueryVo;
+import com.zzazz.model.vo.system.AssignRoleVo;
+import com.zzazz.model.vo.system.SysRoleQueryVo;
 import com.zzazz.system.annotation.Log;
 import com.zzazz.system.enums.BusinessType;
 import com.zzazz.system.service.SysRoleService;

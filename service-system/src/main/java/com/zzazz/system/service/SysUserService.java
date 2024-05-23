@@ -3,7 +3,7 @@ package com.zzazz.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysUser;
-import com.zzazz.model.vo.SysUserQueryVo;
+import com.zzazz.model.vo.system.SysUserQueryVo;
 
 import java.util.Map;
 

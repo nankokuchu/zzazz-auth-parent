@@ -2,8 +2,8 @@ package com.zzazz.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.system.SysMenu;
-import com.zzazz.model.vo.AssignMenuVo;
-import com.zzazz.model.vo.RouterVo;
+import com.zzazz.model.vo.system.AssignMenuVo;
+import com.zzazz.model.vo.system.RouterVo;
 
 import java.io.Serializable;
 import java.util.List;

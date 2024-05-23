@@ -7,7 +7,7 @@ import com.zzazz.common.util.IpUtil;
 import com.zzazz.common.util.JwtHelper;
 import com.zzazz.common.util.ResponseUtil;
 import com.zzazz.system.custom.CustomUser;
-import com.zzazz.model.vo.LoginVo;
+import com.zzazz.model.vo.system.LoginVo;
 import com.zzazz.system.service.SysLoginLogService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -5,7 +5,7 @@ import com.zzazz.common.result.ResultCodeEnum;
 import com.zzazz.common.util.JwtHelper;
 import com.zzazz.common.util.MD5;
 import com.zzazz.model.system.SysUser;
-import com.zzazz.model.vo.LoginVo;
+import com.zzazz.model.vo.system.LoginVo;
 import com.zzazz.system.exception.ZzazzException;
 import com.zzazz.system.service.SysUserService;
 import io.swagger.annotations.Api;

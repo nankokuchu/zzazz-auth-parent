@@ -1,8 +1,8 @@
 package com.zzazz.system.util;
 
 import com.zzazz.model.system.SysMenu;
-import com.zzazz.model.vo.MetaVo;
-import com.zzazz.model.vo.RouterVo;
+import com.zzazz.model.vo.system.MetaVo;
+import com.zzazz.model.vo.system.RouterVo;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 

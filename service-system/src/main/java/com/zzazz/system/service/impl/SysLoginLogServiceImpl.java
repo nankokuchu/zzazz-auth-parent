@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzazz.model.system.SysLoginLog;
-import com.zzazz.model.vo.SysLoginLogQueryVo;
+import com.zzazz.model.vo.system.SysLoginLogQueryVo;
 import com.zzazz.system.mapper.SysLoginLogMapper;
 import com.zzazz.system.service.SysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
