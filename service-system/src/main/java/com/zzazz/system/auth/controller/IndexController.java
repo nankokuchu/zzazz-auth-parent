@@ -1,4 +1,4 @@
-package com.zzazz.system.controller;
+package com.zzazz.system.auth.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.common.result.ResultCodeEnum;
@@ -6,8 +6,8 @@ import com.zzazz.common.util.JwtHelper;
 import com.zzazz.common.util.MD5;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.model.vo.system.LoginVo;
+import com.zzazz.system.auth.service.SysUserService;
 import com.zzazz.system.exception.ZzazzException;
-import com.zzazz.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

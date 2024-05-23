@@ -1,4 +1,4 @@
-package com.zzazz.system.util;
+package com.zzazz.system.auth.util;
 
 import com.zzazz.model.system.SysMenu;
 

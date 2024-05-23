@@ -1,11 +1,11 @@
-package com.zzazz.system.service.impl;
+package com.zzazz.system.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzazz.model.system.SysOperLog;
 import com.zzazz.model.vo.system.SysOperLogQueryVo;
-import com.zzazz.system.mapper.OperLogMapper;
+import com.zzazz.system.auth.mapper.OperLogMapper;
 import com.zzazz.system.service.OperLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

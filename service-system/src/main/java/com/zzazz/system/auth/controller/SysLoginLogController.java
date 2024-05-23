@@ -1,4 +1,4 @@
-package com.zzazz.system.controller;
+package com.zzazz.system.auth.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;

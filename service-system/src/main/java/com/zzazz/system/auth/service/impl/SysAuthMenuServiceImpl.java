@@ -1,9 +1,9 @@
-package com.zzazz.system.service.impl;
+package com.zzazz.system.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzazz.model.system.SysMenu;
-import com.zzazz.system.mapper.SysMenuMapper;
+import com.zzazz.system.auth.mapper.SysMenuMapper;
 import com.zzazz.system.service.SysAuthMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

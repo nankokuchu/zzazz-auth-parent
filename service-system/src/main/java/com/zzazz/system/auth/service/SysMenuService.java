@@ -1,4 +1,4 @@
-package com.zzazz.system.service;
+package com.zzazz.system.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.system.SysMenu;

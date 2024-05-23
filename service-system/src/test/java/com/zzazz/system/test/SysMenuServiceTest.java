@@ -1,8 +1,7 @@
 package com.zzazz.system.test;
 
 import com.zzazz.model.system.SysMenu;
-import com.zzazz.system.mapper.SysMenuMapper;
-import com.zzazz.system.service.SysMenuService;
+import com.zzazz.system.auth.service.SysMenuService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

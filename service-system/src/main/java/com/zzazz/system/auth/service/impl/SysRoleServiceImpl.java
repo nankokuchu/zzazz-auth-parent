@@ -1,4 +1,4 @@
-package com.zzazz.system.service.impl;
+package com.zzazz.system.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,9 +9,9 @@ import com.zzazz.model.system.SysRole;
 import com.zzazz.model.system.SysUserRole;
 import com.zzazz.model.vo.system.AssignRoleVo;
 import com.zzazz.model.vo.system.SysRoleQueryVo;
-import com.zzazz.system.mapper.SysRoleMapper;
-import com.zzazz.system.mapper.SysUserRoleMapper;
-import com.zzazz.system.service.SysRoleService;
+import com.zzazz.system.auth.mapper.SysRoleMapper;
+import com.zzazz.system.auth.mapper.SysUserRoleMapper;
+import com.zzazz.system.auth.service.SysRoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

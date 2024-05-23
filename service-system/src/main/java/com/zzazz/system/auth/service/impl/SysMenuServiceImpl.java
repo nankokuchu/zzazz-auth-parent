@@ -1,4 +1,4 @@
-package com.zzazz.system.service.impl;
+package com.zzazz.system.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,11 +8,11 @@ import com.zzazz.model.system.SysRoleMenu;
 import com.zzazz.model.vo.system.AssignMenuVo;
 import com.zzazz.model.vo.system.RouterVo;
 import com.zzazz.system.exception.ZzazzException;
-import com.zzazz.system.mapper.SysMenuMapper;
-import com.zzazz.system.mapper.SysRoleMenuMapper;
-import com.zzazz.system.service.SysMenuService;
-import com.zzazz.system.util.MenuHelper;
-import com.zzazz.system.util.RouterHelper;
+import com.zzazz.system.auth.mapper.SysMenuMapper;
+import com.zzazz.system.auth.mapper.SysRoleMenuMapper;
+import com.zzazz.system.auth.service.SysMenuService;
+import com.zzazz.system.auth.util.MenuHelper;
+import com.zzazz.system.auth.util.RouterHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

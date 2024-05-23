@@ -1,4 +1,4 @@
-package com.zzazz.system.controller;
+package com.zzazz.system.auth.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysRole;
@@ -6,7 +6,7 @@ import com.zzazz.model.vo.system.AssignRoleVo;
 import com.zzazz.model.vo.system.SysRoleQueryVo;
 import com.zzazz.system.annotation.Log;
 import com.zzazz.system.enums.BusinessType;
-import com.zzazz.system.service.SysRoleService;
+import com.zzazz.system.auth.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

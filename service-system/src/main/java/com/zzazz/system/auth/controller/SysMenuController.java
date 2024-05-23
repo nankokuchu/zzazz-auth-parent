@@ -1,9 +1,9 @@
-package com.zzazz.system.controller;
+package com.zzazz.system.auth.controller;
 
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysMenu;
 import com.zzazz.model.vo.system.AssignMenuVo;
-import com.zzazz.system.service.SysMenuService;
+import com.zzazz.system.auth.service.SysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

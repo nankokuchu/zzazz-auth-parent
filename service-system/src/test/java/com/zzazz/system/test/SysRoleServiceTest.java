@@ -1,7 +1,7 @@
 package com.zzazz.system.test;
 
 import com.zzazz.model.vo.system.AssignRoleVo;
-import com.zzazz.system.service.SysRoleService;
+import com.zzazz.system.auth.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

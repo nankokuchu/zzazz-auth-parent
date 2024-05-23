@@ -1,4 +1,4 @@
-package com.zzazz.system.mapper;
+package com.zzazz.system.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zzazz.model.system.SysOperLog;

@@ -1,11 +1,11 @@
-package com.zzazz.system.service.impl;
+package com.zzazz.system.auth.service.impl;
 
 import com.zzazz.common.result.ResultCodeEnum;
+import com.zzazz.system.auth.service.SysMenuService;
 import com.zzazz.system.custom.CustomUser;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.system.exception.ZzazzException;
-import com.zzazz.system.service.SysMenuService;
-import com.zzazz.system.service.SysUserService;
+import com.zzazz.system.auth.service.SysUserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
