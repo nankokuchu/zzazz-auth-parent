@@ -65,8 +65,8 @@ public class ProcessTypeController {
 
     // D
     @ApiOperation("DeleteById")
-    @PutMapping("/delete/{id}")
-    public R<Void> delete(@PathVariable Long id) {
+    @DeleteMapping("/remove/{id}")
+    public R<Void> remove(@PathVariable Long id) {
         return processTypeService.removeById(id) ? R.ok() : R.fail();
     }
 }
