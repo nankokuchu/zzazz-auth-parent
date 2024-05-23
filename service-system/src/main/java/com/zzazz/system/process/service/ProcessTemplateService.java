@@ -1,5 +1,6 @@
 package com.zzazz.system.process.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.process.ProcessTemplate;
 
@@ -13,4 +14,5 @@ import com.zzazz.model.process.ProcessTemplate;
  * @Version: v1.0
  */
 public interface ProcessTemplateService extends IService<ProcessTemplate> {
+    IPage<ProcessTemplate> selectPage(Long page, Long size);
 }
