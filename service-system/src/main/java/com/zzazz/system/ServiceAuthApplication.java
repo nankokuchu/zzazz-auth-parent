@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan("com.zzazz")
-@MapperScan("com.zzazz.system.mapper")
+@MapperScan(basePackages = {"com.zzazz.system.auth.mapper","com.zzazz.system.process.mapper"})
 public class ServiceAuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceAuthApplication.class, args);
