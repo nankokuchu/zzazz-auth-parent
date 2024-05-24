@@ -39,6 +39,13 @@ public class ProcessTemplateController {
         this.processTemplateService = processTemplateService;
     }
 
+    @ApiOperation(value = "公開")
+    @GetMapping("/publish/{id}")
+    public R<Void> publish(@PathVariable Long id) {
+        processTemplateService.publish(id);
+        return R.ok();
+    }
+
     // R->pagination
     @ApiOperation("ページネーションで取得")
     @GetMapping("{page}/{size}")

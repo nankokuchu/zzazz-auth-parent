@@ -15,4 +15,6 @@ import com.zzazz.model.process.ProcessTemplate;
  */
 public interface ProcessTemplateService extends IService<ProcessTemplate> {
     IPage<ProcessTemplate> selectPage(Long page, Long size);
+
+    void publish(Long id);
 }

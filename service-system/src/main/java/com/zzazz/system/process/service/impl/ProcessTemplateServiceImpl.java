@@ -57,4 +57,13 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
         }
         return processTemplatePage;
     }
+
+    @Override
+    public void publish(Long id) {
+        ProcessTemplate processTemplate = this.getById(id);
+        processTemplate.setStatus(1);
+        this.updateById(processTemplate);
+
+        //TODO 認証プロセスの設定
+    }
 }
