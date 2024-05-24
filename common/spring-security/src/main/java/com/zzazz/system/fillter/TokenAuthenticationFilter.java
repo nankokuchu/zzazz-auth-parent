@@ -7,6 +7,7 @@ import com.zzazz.common.util.ResponseUtil;
 import com.zzazz.system.service.SysAuthMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +36,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
     private final SysAuthMenuService sysAuthMenuService;
+
     public TokenAuthenticationFilter(SysAuthMenuService sysAuthMenuService) {
         this.sysAuthMenuService = sysAuthMenuService;
     }

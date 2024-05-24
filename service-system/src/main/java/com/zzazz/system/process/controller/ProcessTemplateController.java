@@ -3,7 +3,6 @@ package com.zzazz.system.process.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
 import com.zzazz.model.process.ProcessTemplate;
-import com.zzazz.model.process.ProcessType;
 import com.zzazz.system.process.service.ProcessTemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

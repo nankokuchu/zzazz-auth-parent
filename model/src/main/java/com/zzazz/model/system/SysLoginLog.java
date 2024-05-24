@@ -41,8 +41,10 @@ public class SysLoginLog extends BaseEntity {
     @TableField("msg")
     private String msg;
 
-    @ApiModelProperty(value = "访问时间")
+    @ApiModelProperty(value = "アクセス時間")
     @TableField("access_time")
     private Date accessTime;
 
+    @TableField(exist = false)
+    private String statusStr;
 }
