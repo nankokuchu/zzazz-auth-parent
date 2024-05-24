@@ -1,13 +1,22 @@
 package com.zzazz.system.process.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.xiaoymin.knife4j.core.io.ResourceUtil;
 import com.zzazz.common.result.R;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.system.process.service.ProcessTemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ClassName: ProcessTemplateController
@@ -67,5 +76,36 @@ public class ProcessTemplateController {
     @DeleteMapping("/remove/{id}")
     public R<Void> remove(@PathVariable Long id) {
         return processTemplateService.removeById(id) ? R.ok() : R.fail();
+    }
+
+    // zipファイルのアップロード
+    @ApiOperation(value = "上传流程定义")
+    @PostMapping("/uploadProcessDefinition")
+    public R uploadProcessDefinition(MultipartFile file) throws FileNotFoundException {
+        // D:\Program_Files\Java_Project\zzazz-auth-parent\service-system\target\classes
+        String path = new File(ResourceUtils.getURL("classpath:").getPath())
+                .getAbsolutePath();
+
+        // アップロードしたファイルを保存するフォルダを設定
+        File tempFile = new File(path + "/processes/");
+        if (!tempFile.exists()) {
+            tempFile.mkdir(); //フォルダを作成
+        }
+
+        String fileName = file.getOriginalFilename();
+        File imageFile = new File(path + "/processes/" + fileName);
+        // アップしたファイルを保存
+        try {
+            file.transferTo(imageFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return R.fail("ファイルアップロード失敗");
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("processDefinitionPath", "processes/" + fileName);
+        assert fileName != null;
+        map.put("processDefinitionKey", fileName.substring(0, fileName.lastIndexOf(".")));
+        return R.ok(map);
     }
 }
