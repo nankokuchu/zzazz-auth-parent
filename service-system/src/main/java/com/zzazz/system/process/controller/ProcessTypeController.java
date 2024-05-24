@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * ClassName: ProcessTypeController
  * Package: com.zzazz.system.process.controller
@@ -29,6 +31,14 @@ public class ProcessTypeController {
     @Autowired
     public ProcessTypeController(ProcessTypeService processTypeService) {
         this.processTypeService = processTypeService;
+    }
+
+    // R->全てのデータを取得
+    @Log(title = "index")
+    @ApiOperation("全てのデータを取得")
+    @GetMapping("findAll")
+    public R<List<ProcessType>> findAll() {
+        return R.ok( processTypeService.list());
     }
 
     // R->pagination
