@@ -3,9 +3,11 @@ package com.zzazz.system.process.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
 import com.zzazz.model.process.Process;
+import com.zzazz.model.process.ProcessType;
 import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
 import com.zzazz.system.process.service.ProcessService;
+import com.zzazz.system.process.service.ProcessTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * ClassName: ProcessController
@@ -27,12 +31,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/admin/process")
 public class ProcessController {
-    private final ProcessService processService;
+    @Autowired
+    private ProcessService processService;
 
     @Autowired
-    public ProcessController(ProcessService processService) {
-        this.processService = processService;
-    }
+    private ProcessTypeService processTypeService;
+
+    // @Autowired
+    // public ProcessController(ProcessService processService, ProcessTypeService processTypeService) {
+    //     this.processService = processService;
+    //     this.processTypeService = processTypeService;
+    // }
 
     // R->pagination
     @ApiOperation(value = "ページネーションで探す")
@@ -44,6 +53,11 @@ public class ProcessController {
         return R.ok(pageModel);
     }
 
+    @GetMapping("findProcessType")
+    public R<List<ProcessType>> findProcessType() {
+        List<ProcessType> list = processTypeService.findProcessType();
+        return R.ok(list);
+    }
 
     // R->One
 
