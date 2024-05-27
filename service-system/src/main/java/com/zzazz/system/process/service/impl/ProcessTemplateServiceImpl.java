@@ -7,12 +7,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.process.ProcessType;
 import com.zzazz.system.process.mapper.ProcessTemplateMapper;
+import com.zzazz.system.process.service.ProcessService;
 import com.zzazz.system.process.service.ProcessTemplateService;
 import com.zzazz.system.process.service.ProcessTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -28,16 +30,21 @@ import java.util.List;
 @Service
 public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMapper, ProcessTemplate> implements ProcessTemplateService {
     private static final Logger log = LoggerFactory.getLogger(ProcessTemplateServiceImpl.class);
-
-    private final ProcessTemplateMapper processTemplateMapper;
-
-    private final ProcessTypeService processTypeService;
-
     @Autowired
-    public ProcessTemplateServiceImpl(ProcessTemplateMapper processTemplateMapper, ProcessTypeService processTypeService) {
-        this.processTemplateMapper = processTemplateMapper;
-        this.processTypeService = processTypeService;
-    }
+    private ProcessTemplateMapper processTemplateMapper;
+    @Autowired
+    private ProcessTypeService processTypeService;
+    @Autowired
+    private ProcessService processService;
+
+    // @Autowired
+    // public ProcessTemplateServiceImpl(ProcessTemplateMapper processTemplateMapper,
+    //                                   ProcessTypeService processTypeService,
+    //                                   ProcessService processService) {
+    //     this.processTemplateMapper = processTemplateMapper;
+    //     this.processTypeService = processTypeService;
+    //     this.processService = processService;
+    // }
 
     @Override
     public IPage<ProcessTemplate> selectPage(Long page, Long size) {
@@ -63,7 +70,13 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
         ProcessTemplate processTemplate = this.getById(id);
         processTemplate.setStatus(1);
         this.updateById(processTemplate);
+        // TODO logを削除
+        log.info("公開したプロセステンプレートは{}", processTemplate);
 
-        //TODO 認証プロセスの設定
+        // 認証プロセスの設定
+        String processDefinitionPath = processTemplate.getProcessDefinitionPath();
+        if (!StringUtils.isEmpty(processDefinitionPath)){
+            processService.deployByZip(processDefinitionPath);
+        }
     }
 }

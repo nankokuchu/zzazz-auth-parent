@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.process.ProcessType;
 
+import java.util.List;
+
 /**
  * ClassName: ProcessType
  * Package: com.zzazz.system.process.service
@@ -15,4 +17,6 @@ import com.zzazz.model.process.ProcessType;
  */
 public interface ProcessTypeService extends IService<ProcessType> {
     IPage<ProcessType> getPage(Long page, Long size);
+
+    List<ProcessType> findProcessType();
 }

@@ -17,4 +17,7 @@ import com.zzazz.model.vo.process.ProcessVo;
 public interface ProcessService extends IService<Process> {
     IPage<ProcessVo> selectPage(Long page, Long size, ProcessQueryVo processQueryVo);
 
+
+    // プロセスの作成
+    void deployByZip(String deployPath);
 }
