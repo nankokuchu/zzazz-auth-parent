@@ -2,6 +2,8 @@ package com.zzazz.system.process.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzazz.model.process.Process;
+import com.zzazz.model.vo.process.ProcessFormVo;
 import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
 
@@ -20,4 +22,6 @@ public interface ProcessService extends IService<Process> {
 
     // プロセスの作成
     void deployByZip(String deployPath);
+
+    void startUp(ProcessFormVo processFormVo);
 }

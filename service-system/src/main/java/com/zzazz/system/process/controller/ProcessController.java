@@ -2,19 +2,20 @@ package com.zzazz.system.process.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
-import com.zzazz.model.process.Process;
+import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.process.ProcessType;
+import com.zzazz.model.vo.process.ProcessFormVo;
 import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
 import com.zzazz.system.process.service.ProcessService;
+import com.zzazz.system.process.service.ProcessTemplateService;
 import com.zzazz.system.process.service.ProcessTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,12 +31,17 @@ import java.util.List;
 @Api(tags = "認証管理")
 @RestController
 @RequestMapping(value = "/admin/process")
+@CrossOrigin
 public class ProcessController {
+    private static final Logger log = LoggerFactory.getLogger(ProcessController.class);
     @Autowired
     private ProcessService processService;
 
     @Autowired
     private ProcessTypeService processTypeService;
+
+    @Autowired
+    private ProcessTemplateService processTemplateService;
 
     // @Autowired
     // public ProcessController(ProcessService processService, ProcessTypeService processTypeService) {
@@ -53,10 +59,29 @@ public class ProcessController {
         return R.ok(pageModel);
     }
 
+    // 全てのプロセスタイプとプロセステンプレートを取得
     @GetMapping("findProcessType")
     public R<List<ProcessType>> findProcessType() {
         List<ProcessType> list = processTypeService.findProcessType();
         return R.ok(list);
+    }
+
+    // 個別プロセステンプレートのデータを取得
+    @GetMapping("getProcessTemplate/{processTemplateId}")
+    public R<ProcessTemplate> getProcessTemplate(@PathVariable Long processTemplateId) {
+        ProcessTemplate processTemplate = processTemplateService.getById(processTemplateId);
+        log.info("プロセステンプレートは:{}", processTemplate);
+        return R.ok(processTemplate);
+    }
+
+    // プロセスの作成
+    @ApiOperation(value = "プロセスを作成する")
+    @PostMapping("/startUp")
+    public R startUp(@RequestBody ProcessFormVo processFormVo) {
+        // todo log削除
+        log.info("ProcessFormVoは:{}", processFormVo);
+        processService.startUp(processFormVo);
+        return R.ok();
     }
 
     // R->One
