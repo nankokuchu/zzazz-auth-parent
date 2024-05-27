@@ -6,8 +6,8 @@ mybatis-plus:
       id-type: auto
       logic-delete-field: isDeleted
 #      table-prefix: sys_
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 spring:
   datasource:
