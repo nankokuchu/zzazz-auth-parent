@@ -4,6 +4,7 @@ import com.zzazz.common.result.R;
 import com.zzazz.common.result.ResultCodeEnum;
 import com.zzazz.common.util.JwtHelper;
 import com.zzazz.common.util.ResponseUtil;
+import com.zzazz.system.custom.LoginUserInfoHelper;
 import com.zzazz.system.service.SysAuthMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             Long userId = JwtHelper.getUserId(token);
             // logger.info("username:"+username);
             if (!StringUtils.isEmpty(username)) {
+                // 現在のユーザー情報をThreadLocalに保存する
+                LoginUserInfoHelper.setUserId(userId);
+                LoginUserInfoHelper.setUsername(username);
                 // ボタン権限を取得
                 List<String> userButtonList = sysAuthMenuService.getUserButtonList(userId);
                 // log.info(String.valueOf(userButtonList));
