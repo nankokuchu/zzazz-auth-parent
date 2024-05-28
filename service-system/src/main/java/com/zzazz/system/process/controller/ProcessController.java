@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.process.ProcessType;
+import com.zzazz.model.vo.process.ApprovalVo;
 import com.zzazz.model.vo.process.ProcessFormVo;
 import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
@@ -120,13 +121,23 @@ public class ProcessController {
 
     /**
      * プロセスのidから詳細情報を取得
+     *
      * @param id プロセスid
-     * @return R<Map<String, Object>>
+     * @return R<Map < String, Object>>
      */
     @ApiOperation(value = "プロセスのidから詳細情報を取得")
     @GetMapping("/show/{id}")
-    public R<Map<String, Object>> show(@PathVariable Long id){
+    public R<Map<String, Object>> show(@PathVariable Long id) {
         Map<String, Object> map = processService.show(id);
         return R.ok(map);
+    }
+
+    @ApiOperation(value = "承認チェック、1は承認、-1は否認")
+    @PostMapping("/approve")
+    public R approve(@RequestBody ApprovalVo approvalVo) {
+        // log.info("{}", approvalVo);
+        // ApprovalVo(processId=2, taskId=f8db3395-1c93-11ef-8a53-32c9ab539985, status=-1, description=null)
+        processService.approve(approvalVo);
+        return R.ok();
     }
 }
