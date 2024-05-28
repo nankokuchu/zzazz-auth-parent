@@ -3,3 +3,7 @@ spring:
     name: service-system
   profiles:
     active: dev
+  banner:
+    location: banner.txt
+logging:
+  config: classpath:logback.xml
