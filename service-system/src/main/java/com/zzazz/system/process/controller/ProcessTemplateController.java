@@ -88,7 +88,7 @@ public class ProcessTemplateController {
     // zipファイルのアップロード
     @ApiOperation(value = "上传流程定义")
     @PostMapping("/uploadProcessDefinition")
-    public R uploadProcessDefinition(MultipartFile file) throws FileNotFoundException {
+    public R<Object> uploadProcessDefinition(MultipartFile file) throws FileNotFoundException {
         // D:\Program_Files\Java_Project\zzazz-auth-parent\service-system\target\classes
         String path = new File(ResourceUtils.getURL("classpath:").getPath())
                 .getAbsolutePath();
