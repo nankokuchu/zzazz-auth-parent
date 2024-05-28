@@ -24,9 +24,12 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.EndEvent;
 import org.activiti.bpmn.model.FlowNode;
 import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -73,6 +76,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private HistoryService historyService;
 
     @Autowired
     private ProcessRecordService processRecordService;
@@ -171,14 +177,16 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
     }
 
     @Override
-    public List<ProcessVo> findPending() {
+    public IPage<ProcessVo> findPending(Page<Process> pageParam) {
         // 1,登録しているusernameでTaskを探す
         String username = LoginUserInfoHelper.getUsername();
-        TaskQuery taskQuery = taskService.createTaskQuery()
+        TaskQuery query = taskService.createTaskQuery()
                 .taskAssignee(username)
                 .orderByTaskCreateTime()
                 .desc();
-        List<Task> taskList = taskQuery.list();
+        List<Task> taskList =
+                query.listPage((int) ((pageParam.getCurrent() - 1) * pageParam.getSize()), (int) pageParam.getSize());
+        long totalCount = query.count();
 
         // 2,List<Task>をList<ProcessVo>形式に変換
         // TODO log
@@ -208,8 +216,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
             log.info("processVo::::{}", processVo);
             processVoList.add(processVo);
         }
-
-        return processVoList;
+        IPage<ProcessVo> page = new Page<>(pageParam.getCurrent(), pageParam.getSize(), totalCount);
+        page.setRecords(processVoList);
+        return page;
     }
 
     // プロセスのidから詳細情報を取得
@@ -300,6 +309,46 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         }
 
         baseMapper.updateById(process);
+    }
+
+    @Override
+    public IPage<ProcessVo> findProcessed(Page<Process> pageParam) {
+        String currentUsername = LoginUserInfoHelper.getUsername();
+        // ユーザーの処理済みの履歴を探す
+        HistoricTaskInstanceQuery query =
+                historyService.createHistoricTaskInstanceQuery()
+                        .taskAssignee(currentUsername)
+                        .finished()
+                        .orderByTaskCreateTime()
+                        .desc();
+
+        List<HistoricTaskInstance> list =
+                query.listPage((int) ((pageParam.getCurrent() - 1) * pageParam.getSize()), (int) pageParam.getSize());
+        long totalCount = query.count();
+
+        List<ProcessVo> processList = new ArrayList<>();
+        for (HistoricTaskInstance item : list) {
+            String processInstanceId = item.getProcessInstanceId();
+            Process process = this.getOne(new LambdaQueryWrapper<Process>().eq(Process::getProcessInstanceId, processInstanceId));
+            ProcessVo processVo = new ProcessVo();
+            BeanUtils.copyProperties(process, processVo);
+            processVo.setTaskId("0");
+            processList.add(processVo);
+        }
+        IPage<ProcessVo> page = new Page<>(pageParam.getCurrent(), pageParam.getSize(), totalCount);
+        page.setRecords(processList);
+        return page;
+    }
+
+    @Override
+    public IPage<ProcessVo> findStarted(Page<ProcessVo> pageParam) {
+        ProcessQueryVo processQueryVo = new ProcessQueryVo();
+        processQueryVo.setUserId(LoginUserInfoHelper.getUserId());
+        IPage<ProcessVo> page = processMapper.selectPage(pageParam, processQueryVo);
+        for (ProcessVo item : page.getRecords()) {
+            item.setTaskId("0");
+        }
+        return page;
     }
 
     private void endTask(String taskId) {

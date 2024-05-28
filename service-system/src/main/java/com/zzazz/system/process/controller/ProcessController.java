@@ -1,9 +1,11 @@
 package com.zzazz.system.process.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzazz.common.result.R;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.process.ProcessType;
+import com.zzazz.model.process.Process;
 import com.zzazz.model.vo.process.ApprovalVo;
 import com.zzazz.model.vo.process.ProcessFormVo;
 import com.zzazz.model.vo.process.ProcessQueryVo;
@@ -13,6 +15,7 @@ import com.zzazz.system.process.service.ProcessTemplateService;
 import com.zzazz.system.process.service.ProcessTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,15 +111,11 @@ public class ProcessController {
      * @return R<List < Process>>
      */
     @ApiOperation(value = "処理待ち状態のプロセスを取得")
-    @GetMapping("/findPending")
-    public R<List<ProcessVo>> findPending() {
-        List<ProcessVo> processVoList = processService.findPending();
-        assert processVoList != null;
-        for (ProcessVo processVo : processVoList) {
-            // todo log削除
-            log.info("processVoは：{}", processVo);
-        }
-        return R.ok(processVoList);
+    @GetMapping("/findPending/{page}/{size}")
+    public R<IPage<ProcessVo>> findPending(@PathVariable Long page,
+                                          @PathVariable Long size) {
+        Page<Process> pageParam = new Page<>(page, size);
+        return R.ok(processService.findPending(pageParam));
     }
 
     /**
@@ -134,10 +133,28 @@ public class ProcessController {
 
     @ApiOperation(value = "承認チェック、1は承認、-1は否認")
     @PostMapping("/approve")
-    public R approve(@RequestBody ApprovalVo approvalVo) {
+    public R<Void> approve(@RequestBody ApprovalVo approvalVo) {
         // log.info("{}", approvalVo);
         // ApprovalVo(processId=2, taskId=f8db3395-1c93-11ef-8a53-32c9ab539985, status=-1, description=null)
         processService.approve(approvalVo);
         return R.ok();
+    }
+
+    @ApiOperation(value = "処理済み")
+    @GetMapping("/findProcessed/{page}/{size}")
+    public R<IPage<ProcessVo>> findProcessed(
+            @PathVariable Long page,
+            @PathVariable Long size) {
+        Page<Process> pageParam = new Page<>(page, size);
+        return R.ok(processService.findProcessed(pageParam));
+    }
+
+    @ApiOperation(value = "申請済み")
+    @GetMapping("/findStarted/{page}/{size}")
+    public R<IPage<ProcessVo>> findStarted(
+            @PathVariable Long page,
+            @PathVariable Long size) {
+        Page<ProcessVo> pageParam = new Page<>(page, size);
+        return R.ok(processService.findStarted(pageParam));
     }
 }
