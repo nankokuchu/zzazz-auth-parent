@@ -8,6 +8,7 @@ import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: Process
@@ -21,11 +22,13 @@ import java.util.List;
 public interface ProcessService extends IService<Process> {
     IPage<ProcessVo> selectPage(Long page, Long size, ProcessQueryVo processQueryVo);
 
-
     // プロセスの作成
     void deployByZip(String deployPath);
 
     void startUp(ProcessFormVo processFormVo);
 
     List<ProcessVo> findPending();
+
+    // プロセスのidから詳細情報を取得
+    Map<String, Object> show(Long id);
 }

@@ -2,10 +2,12 @@ package com.zzazz.system.process.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzazz.model.process.Process;
+import com.zzazz.model.process.ProcessRecord;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.system.SysUser;
 import com.zzazz.model.vo.process.ProcessFormVo;
@@ -202,6 +204,42 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         }
 
         return processVoList;
+    }
+
+    // プロセスのidから詳細情報を取得
+    @Override
+    public Map<String, Object> show(Long id) {
+        // 1,ProcessId(param id)からProcessを取得
+        Process process = baseMapper.selectById(id);
+
+        // 2,processIdからprocessRecodeを取得
+        LambdaQueryWrapper<ProcessRecord> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProcessRecord::getProcessId, id);
+        List<ProcessRecord> processRecordList = processRecordService.list(wrapper);
+
+        // 3,processからTemplateを取得
+        Long processTemplateId = process.getProcessTemplateId();
+        ProcessTemplate processTemplate = processTemplateService.getById(processTemplateId);
+
+        // 4,カレントユーザーが承認権限があるかをチェック（重複承認も防ぐ）
+        boolean isApprove = false;
+        String processInstanceId = process.getProcessInstanceId();
+        List<Task> currentTaskList = this.getCurrentTaskList(processInstanceId);
+        for (Task task : currentTaskList) {
+            // task中の承認ユーザーがカレントユーザーであるかをチェック
+            String username = LoginUserInfoHelper.getUsername();
+            if (task.getAssignee().equals(username)) {
+                isApprove = true;
+            }
+        }
+
+        // 5,データを返す
+        Map<String, Object> map = new HashMap<>();
+        map.put("process", process);
+        map.put("processRecordList", processRecordList);
+        map.put("processTemplate", processTemplate);
+        map.put("isApprove", isApprove);
+        return map;
     }
 
     // Taskを取得

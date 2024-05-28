@@ -2,7 +2,6 @@ package com.zzazz.system.process.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
-import com.zzazz.model.process.Process;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.process.ProcessType;
 import com.zzazz.model.vo.process.ProcessFormVo;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: ProcessController
@@ -116,5 +116,17 @@ public class ProcessController {
             log.info("processVoは：{}", processVo);
         }
         return R.ok(processVoList);
+    }
+
+    /**
+     * プロセスのidから詳細情報を取得
+     * @param id プロセスid
+     * @return R<Map<String, Object>>
+     */
+    @ApiOperation(value = "プロセスのidから詳細情報を取得")
+    @GetMapping("/show/{id}")
+    public R<Map<String, Object>> show(@PathVariable Long id){
+        Map<String, Object> map = processService.show(id);
+        return R.ok(map);
     }
 }
