@@ -61,14 +61,8 @@ public class JwtHelper {
     }
 
     // テスト
-    // public static void main(String[] args) {
-    //     String token = JwtHelper.createToken("1", "test");
-    //     System.out.println(token);
-    //
-    //     String userId = JwtHelper.getUserId(token);
-    //     System.out.println(userId);
-    //
-    //     String username = JwtHelper.getUsername(token);
-    //     System.out.println(username);
-    // }
+    public static void main(String[] args) {
+        String token = JwtHelper.createToken(6L, "boss");
+        System.out.println(token);
+    }
 }
