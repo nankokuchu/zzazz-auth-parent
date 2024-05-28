@@ -7,6 +7,8 @@ import com.zzazz.model.vo.process.ProcessFormVo;
 import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
 
+import java.util.List;
+
 /**
  * ClassName: Process
  * Package: com.zzazz.system.process.service
@@ -24,4 +26,6 @@ public interface ProcessService extends IService<Process> {
     void deployByZip(String deployPath);
 
     void startUp(ProcessFormVo processFormVo);
+
+    List<ProcessVo> findPending();
 }

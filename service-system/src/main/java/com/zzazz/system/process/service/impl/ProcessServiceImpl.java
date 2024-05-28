@@ -23,6 +23,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,13 +153,55 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
             // TODO 6メッセージを送る
         }
         process.setProcessInstanceId(processInstanceId);
-        process.setDescription(StringUtils.join(nameList.toString(),",")+"の認証を待ち中です");
+        process.setDescription(StringUtils.join(nameList.toString(), ",") + "の認証を待ち中です");
 
         // 7,承認プロセスと業務を結合する
         processMapper.updateById(process);
 
         // 8,プロセスの操作履歴を保存
-        processRecordService.record(process.getId(),1,"認証を申請しています");
+        processRecordService.record(process.getId(), 1, "認証を申請しています");
+    }
+
+    @Override
+    public List<ProcessVo> findPending() {
+        // 1,登録しているusernameでTaskを探す
+        String username = LoginUserInfoHelper.getUsername();
+        TaskQuery taskQuery = taskService.createTaskQuery()
+                .taskAssignee(username)
+                .orderByTaskCreateTime()
+                .desc();
+        List<Task> taskList = taskQuery.list();
+
+        // 2,List<Task>をList<ProcessVo>形式に変換
+        // TODO log
+        List<ProcessVo> processVoList = new ArrayList<>();
+        for (Task task : taskList) {
+            log.info("task:{}", task);
+            // taskからprocessInstanceIdを取得
+            String processInstanceId = task.getProcessInstanceId();
+            // processInstanceIdからprocessInstanceを取得
+            ProcessInstance processInstance =
+                    runtimeService.createProcessInstanceQuery()
+                            .processInstanceId(processInstanceId)
+                            .singleResult();
+            // processInstanceのbusinessKeyを取得
+            String businessKey = processInstance.getBusinessKey();
+            if (businessKey == null) {
+                continue;
+            }
+            // businessKeyからProcessを取得
+            Long processId = Long.parseLong(businessKey);
+            Process process = baseMapper.selectById(processId);
+
+            // ProcessをProcessVoに値を入れる
+            ProcessVo processVo = new ProcessVo();
+            BeanUtils.copyProperties(process, processVo);
+            processVo.setTaskId(task.getId());
+            log.info("processVo::::{}", processVo);
+            processVoList.add(processVo);
+        }
+
+        return processVoList;
     }
 
     // Taskを取得

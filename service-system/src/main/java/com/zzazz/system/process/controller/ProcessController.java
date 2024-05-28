@@ -2,6 +2,7 @@ package com.zzazz.system.process.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
+import com.zzazz.model.process.Process;
 import com.zzazz.model.process.ProcessTemplate;
 import com.zzazz.model.process.ProcessType;
 import com.zzazz.model.vo.process.ProcessFormVo;
@@ -59,14 +60,25 @@ public class ProcessController {
         return R.ok(pageModel);
     }
 
-    // 全てのプロセスタイプとプロセステンプレートを取得
+    /**
+     * 全てのプロセスタイプとプロセステンプレートを取得
+     *
+     * @return R<List < ProcessType>>
+     */
+    @ApiOperation(value = "全てのプロセスタイプとプロセステンプレートを取得")
     @GetMapping("findProcessType")
     public R<List<ProcessType>> findProcessType() {
         List<ProcessType> list = processTypeService.findProcessType();
         return R.ok(list);
     }
 
-    // 個別プロセステンプレートのデータを取得
+    /**
+     * 個別プロセステンプレートのデータを取得
+     *
+     * @param processTemplateId プロセステンプレートID
+     * @return R<ProcessTemplate>
+     */
+    @ApiOperation(value = "個別プロセステンプレートのデータを取得")
     @GetMapping("getProcessTemplate/{processTemplateId}")
     public R<ProcessTemplate> getProcessTemplate(@PathVariable Long processTemplateId) {
         ProcessTemplate processTemplate = processTemplateService.getById(processTemplateId);
@@ -74,21 +86,35 @@ public class ProcessController {
         return R.ok(processTemplate);
     }
 
-    // プロセスの作成
+    /**
+     * プロセスの作成
+     *
+     * @param processFormVo ParameterのBean
+     * @return R
+     */
     @ApiOperation(value = "プロセスを作成する")
     @PostMapping("/startUp")
-    public R startUp(@RequestBody ProcessFormVo processFormVo) {
+    public R<Void> startUp(@RequestBody ProcessFormVo processFormVo) {
         // todo log削除
         log.info("ProcessFormVoは:{}", processFormVo);
         processService.startUp(processFormVo);
         return R.ok();
     }
 
-    // R->One
-
-    // C
-
-    // U
-
-    // D
+    /**
+     * 処理待ち状態のプロセスを取得
+     *
+     * @return R<List < Process>>
+     */
+    @ApiOperation(value = "処理待ち状態のプロセスを取得")
+    @GetMapping("/findPending")
+    public R<List<ProcessVo>> findPending() {
+        List<ProcessVo> processVoList = processService.findPending();
+        assert processVoList != null;
+        for (ProcessVo processVo : processVoList) {
+            // todo log削除
+            log.info("processVoは：{}", processVo);
+        }
+        return R.ok(processVoList);
+    }
 }
