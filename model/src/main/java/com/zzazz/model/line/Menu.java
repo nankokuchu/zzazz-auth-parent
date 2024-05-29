@@ -33,7 +33,7 @@ public class Menu extends BaseEntity {
     @ApiModelProperty(value = "ウェブリンク、ユーザーがメニューをクリックするとリンクを開くことができる")
     private String url;
 
-    @ApiModelProperty(value = "メニューKEY値、メッセージインターフェースプッシュ用")
+    @ApiModelProperty(value = "メニューKEY、メッセージインターフェースプッシュ用")
     @TableField("menu_key")
     private String menuKey;
 
