@@ -48,9 +48,6 @@ public class ProcessController {
     @Autowired
     private ProcessTemplateService processTemplateService;
 
-    @Autowired
-    private SysUserService sysUserService;
-
     // @Autowired
     // public ProcessController(ProcessService processService, ProcessTypeService processTypeService) {
     //     this.processService = processService;
@@ -159,12 +156,5 @@ public class ProcessController {
             @PathVariable Long size) {
         Page<ProcessVo> pageParam = new Page<>(page, size);
         return R.ok(processService.findStarted(pageParam));
-    }
-
-    @ApiOperation(value = "CurrentUser情報を取得")
-    @GetMapping("/getCurrentUser")
-    public R<Map<String,Object>> getCurrentUser(){
-        Map<String,Object> map = sysUserService.getCurrentUser();
-        return R.ok(map);
     }
 }

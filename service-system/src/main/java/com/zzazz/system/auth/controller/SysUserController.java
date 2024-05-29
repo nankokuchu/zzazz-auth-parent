@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * ClassName: SysUserController
  * Package: com.zzazz.system.controller
@@ -88,5 +90,12 @@ public class SysUserController {
     public R removeUserById(@PathVariable Long id) {
         sysUserService.removeById(id);
         return R.ok();
+    }
+
+    @ApiOperation(value = "CurrentUser情報を取得")
+    @GetMapping("/getCurrentUser")
+    public R<Map<String,Object>> getCurrentUser(){
+        Map<String,Object> map = sysUserService.getCurrentUser();
+        return R.ok(map);
     }
 }
