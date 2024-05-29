@@ -2,6 +2,9 @@ package com.zzazz.system.line.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.model.line.Menu;
+import com.zzazz.model.vo.line.MenuVo;
+
+import java.util.List;
 
 /**
  * ClassName: Menu
@@ -13,4 +16,7 @@ import com.zzazz.model.line.Menu;
  * @Version: v1.0
  */
 public interface MenuService extends IService<Menu> {
+
+    // 全てのメニューを取得
+    List<MenuVo> findMenuInfo();
 }
