@@ -1,5 +1,6 @@
 package com.zzazz.system.auth.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzazz.common.result.R;
 import com.zzazz.common.util.MD5;
 import com.zzazz.model.system.SysUser;
@@ -42,7 +43,7 @@ public class SysUserController {
      */
     @ApiOperation("ページネーションで探す")
     @GetMapping("{page}/{size}")
-    public R getUserByPagination(
+    public R<IPage<SysUser>> getUserByPagination(
             @ApiParam(name = "page", value = "currentPage", required = true)
             @PathVariable Long page,
 
@@ -57,7 +58,7 @@ public class SysUserController {
     // R->One
     @ApiOperation(value = "IDでユーザーを取得")
     @GetMapping("get/{id}")
-    public R getUserById(@PathVariable Long id) {
+    public R<SysUser> getUserById(@PathVariable Long id) {
         SysUser user = sysUserService.getById(id);
         return R.ok(user);
     }
@@ -79,7 +80,7 @@ public class SysUserController {
     // U
     @ApiOperation(value = "ユーザーを更新")
     @PutMapping("/update")
-    public R updateById(@RequestBody SysUser user) {
+    public R<Void> updateById(@RequestBody SysUser user) {
         sysUserService.updateById(user);
         return R.ok();
     }
@@ -87,7 +88,7 @@ public class SysUserController {
     // D
     @ApiOperation(value = "ユーザーIDで削除")
     @DeleteMapping("/remove/{id}")
-    public R removeUserById(@PathVariable Long id) {
+    public R<Void> removeUserById(@PathVariable Long id) {
         sysUserService.removeById(id);
         return R.ok();
     }

@@ -38,7 +38,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysMenuService sysMenuService;
 
     @Override
-    public R getUserByPagination(Long page, Long size, SysUserQueryVo sysUserQueryVo) {
+    public R<IPage<SysUser>> getUserByPagination(Long page, Long size, SysUserQueryVo sysUserQueryVo) {
         Page<SysUser> pageParam = new Page<>(page, size);
         IPage<SysUser> pageModel = sysUserMapper.selectPage(pageParam, sysUserQueryVo);
         return R.ok(pageModel);

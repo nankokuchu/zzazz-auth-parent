@@ -1,5 +1,6 @@
 package com.zzazz.system.auth.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzazz.common.result.R;
 import com.zzazz.model.system.SysUser;
@@ -17,7 +18,7 @@ import java.util.Map;
  * @Version: v1.0
  */
 public interface SysUserService extends IService<SysUser> {
-    R getUserByPagination(Long page, Long size, SysUserQueryVo sysUserQueryVo);
+    R<IPage<SysUser>> getUserByPagination(Long page, Long size, SysUserQueryVo sysUserQueryVo);
 
     SysUser getUserInfoByUsername(String username);
 

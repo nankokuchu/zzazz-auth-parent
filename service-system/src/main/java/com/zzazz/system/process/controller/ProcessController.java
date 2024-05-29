@@ -57,7 +57,7 @@ public class ProcessController {
     // R->pagination
     @ApiOperation(value = "ページネーションで探す")
     @GetMapping("{page}/{size}")
-    public R index(@PathVariable Long page,
+    public R<IPage<ProcessVo>> index(@PathVariable Long page,
                    @PathVariable Long size,
                    ProcessQueryVo processQueryVo) {
         IPage<ProcessVo> pageModel = processService.selectPage(page, size, processQueryVo);
