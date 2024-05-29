@@ -26,6 +26,7 @@ import java.util.Map;
 @Api(tags = "ユーザーを管理するAPI")
 @RestController
 @RequestMapping("/admin/system/sysUser")
+@CrossOrigin
 public class SysUserController {
 
     @Autowired
