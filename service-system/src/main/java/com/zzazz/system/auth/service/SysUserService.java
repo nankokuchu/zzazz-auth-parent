@@ -22,4 +22,7 @@ public interface SysUserService extends IService<SysUser> {
     SysUser getUserInfoByUsername(String username);
 
     Map<String, Object> getUserAllInfoByUsername(String username);
+
+    // CurrentUser情報を取得
+    Map<String, Object> getCurrentUser();
 }

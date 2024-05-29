@@ -11,6 +11,7 @@ import com.zzazz.model.vo.system.SysUserQueryVo;
 import com.zzazz.system.auth.mapper.SysUserMapper;
 import com.zzazz.system.auth.service.SysMenuService;
 import com.zzazz.system.auth.service.SysUserService;
+import com.zzazz.system.custom.LoginUserInfoHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +72,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //　ボタンの権限データ
         result.put("buttons", permList);
         return result;
+    }
+
+    @Override
+    public Map<String, Object> getCurrentUser() {
+        Long userId = LoginUserInfoHelper.getUserId();
+        SysUser sysUser = baseMapper.selectById(userId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", sysUser.getName());
+        map.put("phone", sysUser.getPhone());
+        // TODO 部門設定
+        // map.put("deptName",sysDept.getName());
+        // map.put("postName",sysPost.getName());
+        return map;
     }
 }

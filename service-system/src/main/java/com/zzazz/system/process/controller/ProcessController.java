@@ -10,12 +10,12 @@ import com.zzazz.model.vo.process.ApprovalVo;
 import com.zzazz.model.vo.process.ProcessFormVo;
 import com.zzazz.model.vo.process.ProcessQueryVo;
 import com.zzazz.model.vo.process.ProcessVo;
+import com.zzazz.system.auth.service.SysUserService;
 import com.zzazz.system.process.service.ProcessService;
 import com.zzazz.system.process.service.ProcessTemplateService;
 import com.zzazz.system.process.service.ProcessTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,9 @@ public class ProcessController {
 
     @Autowired
     private ProcessTemplateService processTemplateService;
+
+    @Autowired
+    private SysUserService sysUserService;
 
     // @Autowired
     // public ProcessController(ProcessService processService, ProcessTypeService processTypeService) {
@@ -156,5 +159,12 @@ public class ProcessController {
             @PathVariable Long size) {
         Page<ProcessVo> pageParam = new Page<>(page, size);
         return R.ok(processService.findStarted(pageParam));
+    }
+
+    @ApiOperation(value = "CurrentUser情報を取得")
+    @GetMapping("/getCurrentUser")
+    public R<Map<String,Object>> getCurrentUser(){
+        Map<String,Object> map = sysUserService.getCurrentUser();
+        return R.ok(map);
     }
 }
